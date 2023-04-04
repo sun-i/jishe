@@ -76,12 +76,13 @@ def DoctorRegister(request):
             return JsonResponse(result, safe=False)
         else:
             try:
-                doctor = DoctorProfile.objects.create(username=username, password=password, name=name)
+                doctor = DoctorProfile.objects.create(username=username, password=password)
                 doctor.save()
                 print(doctor)
                 result = {'code': 200, 'status': 'OK', 'msg': '用户注册成功'}
                 return JsonResponse(result, safe=False)
             except Exception as e:
+                print(e)
                 result = {'code': 400, 'status': 'ERROR', 'msg': '操作繁忙，请重试'}
                 return JsonResponse(result, safe=False)
 

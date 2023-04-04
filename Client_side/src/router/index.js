@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import AppIndex from '@/components/home/AppIndex'
-import Login from '@/components/Login'
+import paintLogin from '@/components/PaintLogin'
+import doctorLogin from '@/components/DoctorLogin'
+import paintRegister from '@/components/PaintRegister'
+import doctorRegister from '@/components/DoctorRegister'
 
 Vue.use(Router)
 
@@ -11,27 +13,35 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/login',
-      name: 'Login',
-      component: Login,
-      redirect: '/paintLogin',
-      children: [
-        {
-          path: '/paintLogin',
-          name: 'PaintLogin',
-          component: () => import('@/components/PaintLogin')
-        }
-      ]
-
+      path: '/paintLogin',
+      name: 'paintLogin',
+      component: paintLogin,
     },
     {
-      path: '/index',
+      path: '/',
       name: 'AppIndex',
       component: AppIndex,
-      meta: {
-        requireAuth: true
-      }
     },
+    {
+      path: '/doctorLogin',
+      name: 'doctorLogin',
+      component: doctorLogin,
+    },
+    {
+      path: '/paintRegister',
+      name: 'paintRegister',
+      component: paintRegister,
+    },
+    {
+      path: '/doctorRegister',
+      name: 'doctorRegister',
+      component: doctorRegister,
+    },
+    {
+      path: '/appointment',
+      name: 'appointment',
+      component: () => import('@/components/Appointment'),
+    }
   ]
 })
 

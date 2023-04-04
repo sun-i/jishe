@@ -1,12 +1,13 @@
 <template>
-    <div class="bg">
-      <el-form class="login-container" label-position="left"
+  <div class="bg">
+    <el-form class="login-container" label-position="left"
              label-width="0px">
       
-    <el-menu :default-active="'/paintLogin'" router class="el-menu-demo" mode="horizontal">
+    <el-menu :default-active="'/doctorLogin'" router class="el-menu-demo" mode="horizontal">
       <el-menu-item index="/paintLogin">病人登录</el-menu-item>
       <el-menu-item index="/doctorLogin">医生登录</el-menu-item>
     </el-menu>
+      
       
       <el-form-item>
         <el-input type="text" v-model="loginForm.username"
@@ -15,16 +16,17 @@
       <el-form-item>
         <el-input type="password" v-model="loginForm.password"
                   auto-complete="off" placeholder="密码"></el-input>
-        <el-link href="#" class="wangji">忘记密码</el-link>
+                  <el-link href="#" class="wangji">忘记密码</el-link>
       </el-form-item>
       <el-form-item style="width: 100%">
         <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="login">登录</el-button>
       </el-form-item>
       <div>
-        <el-link type="primary" href="#/paintRegister">没有账号？去注册</el-link>
+        <el-link type="primary" href="#/doctorRegister">没有账号？去注册</el-link>
       </div>
     </el-form>
-    </div>
+  </div>
+    
   </template>
 <script>
 
@@ -42,7 +44,7 @@
     methods: {
       login () {
         this.$axios
-          .post('user/patient/login/', this.$qs.stringify({
+          .post('user/doctor/login/', this.$qs.stringify({
             username: this.loginForm.username,
             password: this.loginForm.password
           }), {// 发送表单格式数据
@@ -51,9 +53,12 @@
             }
           })
           .then(successResponse => {
+            console.log("success")
+            console.log(successResponse)
             if (successResponse.data.code === 200) {
-                this.$store.commit('login', this.loginForm)
-                this.$router.push({path: '/index'})
+              console.log(successResponse.data)
+              this.$store.commit('login', successResponse.data)
+              this.$router.push({path: '/index'})
             }
           })
           .catch(failResponse => {
@@ -106,6 +111,5 @@
     background-size: cover;
     position: fixed;
   }
-
 
 </style>

@@ -22,6 +22,7 @@ def PatientLogin(request):
             patient = PatientProfile.objects.get(username__exact=username, password__exact=password)
             patient.save()
         except Exception as e:
+            print(e)
             result = {'code': 400, 'status': 'ERROR', 'msg': '该用户不存在'}
             return JsonResponse(result)
 

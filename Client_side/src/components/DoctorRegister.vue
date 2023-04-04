@@ -1,11 +1,11 @@
 <template>
-    <div class="bg">
-      <el-form class="login-container" label-position="left"
+  <div class="bg">
+    <el-form class="login-container" label-position="left"
              label-width="0px">
       
-    <el-menu :default-active="'/paintLogin'" router class="el-menu-demo" mode="horizontal">
-      <el-menu-item index="/paintLogin">病人登录</el-menu-item>
-      <el-menu-item index="/doctorLogin">医生登录</el-menu-item>
+    <el-menu :default-active="'/doctorRegister'" router class="el-menu-demo" mode="horizontal">
+      <el-menu-item index="/paintRegister">病人注册</el-menu-item>
+      <el-menu-item index="/doctorRegister">医生注册</el-menu-item>
     </el-menu>
       
       <el-form-item>
@@ -15,16 +15,13 @@
       <el-form-item>
         <el-input type="password" v-model="loginForm.password"
                   auto-complete="off" placeholder="密码"></el-input>
-        <el-link href="#" class="wangji">忘记密码</el-link>
       </el-form-item>
       <el-form-item style="width: 100%">
-        <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="login">登录</el-button>
+        <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="login()">注册</el-button>
       </el-form-item>
-      <div>
-        <el-link type="primary" href="#/paintRegister">没有账号？去注册</el-link>
-      </div>
     </el-form>
-    </div>
+  </div>
+    
   </template>
 <script>
 
@@ -41,22 +38,22 @@
     },
     methods: {
       login () {
-        this.$axios
-          .post('user/patient/login/', this.$qs.stringify({
+        this.$axios 
+          .post('user/doctor/register/', this.$qs.stringify({
             username: this.loginForm.username,
             password: this.loginForm.password
-          }), {// 发送表单格式数据
+          }), {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
             }
           })
           .then(successResponse => {
             if (successResponse.data.code === 200) {
-                this.$store.commit('login', this.loginForm)
-                this.$router.push({path: '/index'})
+                this.$router.push({path: '/doctorLogin'})
             }
           })
           .catch(failResponse => {
+            this.$message.error("Error")
           })
       }
     }
@@ -90,14 +87,6 @@
     color: #505458;
   }
 
-  .wangji {
-    margin-top: 5px;
-    float: right;
-    font-size: 10px;
-    height: 20px;
-    line-height: 20px;
-  }
-
   .bg {
     width: 100%;
     height: 100%;
@@ -106,6 +95,5 @@
     background-size: cover;
     position: fixed;
   }
-
 
 </style>
