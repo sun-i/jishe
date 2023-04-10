@@ -52,11 +52,19 @@
           })
           .then(successResponse => {
             if (successResponse.data.code === 200) {
-                this.$store.commit('login', this.loginForm)
-                this.$router.push({path: '/index'})
+                this.$store.commit('login', successResponse.data)
+                this.$message({
+                    message: '登录成功',
+                    type: 'success'
+                  });
+                this.$router.push({path: '/patientIndex'})
+            }
+            else {
+                this.$message.error(successResponse.data.msg)
             }
           })
           .catch(failResponse => {
+            this.$message.error("Error")
           })
       }
     }

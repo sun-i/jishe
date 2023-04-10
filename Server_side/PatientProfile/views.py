@@ -65,7 +65,6 @@ def PatientRegister(request):
             try:
                 patient = PatientProfile.objects.create(username=username, password=password)
                 patient.save()
-                print(patient)
                 result = {'code': 200, 'status': 'OK', 'msg': '用户注册成功'}
                 return JsonResponse(result, safe=False)
             except Exception as e:
@@ -107,6 +106,7 @@ def ModifyInfo(request):
         result = {'code': 400, 'error': '修改方式错误'}
         return JsonResponse(result, safe=False)
     else:
+        print(request.POST)
         try:
             id = int(request.POST.get('id'))
             card = request.POST.get('card')
@@ -114,7 +114,6 @@ def ModifyInfo(request):
             address = request.POST.get('address')
             phone = request.POST.get('phone')
             nation = request.POST.get('nation')
-            work = request.POST.get('work')
             age = request.POST.get('age')
             gender = request.POST.get('gender')
 
@@ -124,7 +123,6 @@ def ModifyInfo(request):
             patient.phone = phone
             patient.nation = nation
             patient.card = card
-            patient.work = work
             patient.age = age
             patient.gender = gender
 
@@ -133,6 +131,7 @@ def ModifyInfo(request):
 
             return JsonResponse(result)
         except Exception as e:
+            print(e)
             result = {'code': 400, 'error': '修改信息错误'}
             return JsonResponse(result)
 

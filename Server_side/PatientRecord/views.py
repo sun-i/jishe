@@ -144,7 +144,7 @@ def GetAllPatientRecordByPatientId(request, id):
                 'doctor_name': DoctorProfile.objects.get(id__exact=record.doctorId).name,
                 'isFinished': record.isFinished,
                 'patientRemark': record.patientRemark,
-                'heartStatus': record.heartStatus,
+                'heartStatus': record.healthStatus,
                 # 'wavPath': AudioRecord.objects.get(id__exact=record.wavId).audioPath,
                 'reportWordName': record.reportWordName,
                 'medicalWordName': record.medicalWordName,
@@ -164,6 +164,7 @@ def GetAllPatientRecordByPatientId(request, id):
         result = {'code': 200, 'msg': '查找成功', 'list': patient_list}
         return JsonResponse(result)
     except Exception as e:
+        print(e)
         result = {'code': 400, 'msg': '服务器繁忙，请重试'}
         return JsonResponse(result, safe=False)
 

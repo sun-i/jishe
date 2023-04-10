@@ -41,6 +41,16 @@ export default new Router({
       path: '/appointment',
       name: 'appointment',
       component: () => import('@/components/Appointment'),
+    },
+    {
+      path: '/patientIndex',
+      name: 'patientIndex',
+      component: () => import('@/components/PatientIndex'),
+    },
+    {
+      path: '/patientRecord',
+      name: 'patientRecord',
+      component: () => import('@/components/PatientRecord'),
     }
   ]
 })

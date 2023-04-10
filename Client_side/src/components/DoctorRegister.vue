@@ -49,7 +49,14 @@
           })
           .then(successResponse => {
             if (successResponse.data.code === 200) {
+              this.$message({
+                    message: '注册成功',
+                    type: 'success'
+                  });
                 this.$router.push({path: '/doctorLogin'})
+            }
+            else {
+              this.$message.error(successResponse.data.msg)
             }
           })
           .catch(failResponse => {

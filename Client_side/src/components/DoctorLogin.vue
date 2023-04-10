@@ -56,9 +56,15 @@
             console.log("success")
             console.log(successResponse)
             if (successResponse.data.code === 200) {
-              console.log(successResponse.data)
-              this.$store.commit('login', successResponse.data)
-              this.$router.push({path: '/index'})
+                this.$store.commit('login', successResponse.data)
+                this.$message({
+                    message: '登录成功',
+                    type: 'success'
+                  });
+                this.$router.push({path: '/patientIndex'})
+            }
+            else {
+                this.$message.error(successResponse.data.msg)
             }
           })
           .catch(failResponse => {
