@@ -2,6 +2,7 @@
 from django.http import JsonResponse
 
 from DoctorProfile.models import DoctorProfile
+from MedicRecord.models import MedicRecord
 from PatientProfile.models import PatientProfile
 from .models import PatientRecord
 
@@ -24,7 +25,7 @@ def GetPatientRecordByRecordId(request, id):
             'doctor_name': DoctorProfile.objects.get(id__exact=record.doctorId).name,
             'isFinished': record.isFinished,
             'patientRemark': record.patientRemark,
-            'heartStatus': record.heartStatus,
+            'healthStatus': record.healthStatus,
             # 'ImagePath': AudioRecord.objects.get(id__exact=record.wavId).audioPath,
             # 病人信息
             'patient_id': patient.id,
@@ -61,7 +62,7 @@ def GetUnCheckedRecordByDoctorId(request, id):
                 'doctor_name': DoctorProfile.objects.get(id__exact=record.doctorId).name,
                 'isFinished': record.isFinished,
                 'patientRemark': record.patientRemark,
-                'heartStatus': record.heartStatus,
+                'healthStatus': record.healthStatus,
                 # 'wavPath': AudioRecord.objects.get(id__exact=record.wavId).audioPath,
                 'reportWordName': record.reportWordName,
                 'medicalWordName': record.medicalWordName,
@@ -105,7 +106,7 @@ def GetAllPatientRecordByDoctorId(request, id):
                 'doctor_name': DoctorProfile.objects.get(id__exact=record.doctorId).name,
                 'isFinished': record.isFinished,
                 'patientRemark': record.patientRemark,
-                'heartStatus': record.heartStatus,
+                'healthStatus': record.healthStatus,
                 # 'wavPath': AudioRecord.objects.get(id__exact=record.wavId).audioPath,
                 'reportWordName': record.reportWordName,
                 'medicalWordName': record.medicalWordName,
@@ -144,7 +145,7 @@ def GetAllPatientRecordByPatientId(request, id):
                 'doctor_name': DoctorProfile.objects.get(id__exact=record.doctorId).name,
                 'isFinished': record.isFinished,
                 'patientRemark': record.patientRemark,
-                'heartStatus': record.healthStatus,
+                'healthStatus': record.healthStatus,
                 # 'wavPath': AudioRecord.objects.get(id__exact=record.wavId).audioPath,
                 'reportWordName': record.reportWordName,
                 'medicalWordName': record.medicalWordName,
@@ -154,7 +155,6 @@ def GetAllPatientRecordByPatientId(request, id):
                 'phone': patient.phone,
                 'email': patient.email,
                 'card': patient.card,
-                'work': patient.work,
                 'age': patient.age,
                 'nation': patient.nation,
                 'address': patient.address,
@@ -188,8 +188,8 @@ def AddPatientRecord(request):
                                                   patientRemark=patientRemark, patientName=name)
             record.save()
             # 创建医嘱
-            # medicRecord = MedicRecord.objects.create(recordId=record.id, doctorId=doctorId, patientId=patientId)
-            # medicRecord.save()
+            medicRecord = MedicRecord.objects.create(recordId=record.id, doctorId=doctorId, patientId=patientId)
+            medicRecord.save()
             result = {'code': 200, 'msg': '预约成功'}
             return JsonResponse(result)
         except Exception as e:

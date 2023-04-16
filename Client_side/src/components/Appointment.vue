@@ -1,12 +1,12 @@
 <template>
     <el-container>
         <el-header class="head">
-                <h3>NAME 检测</h3>
+                <h3>肿瘤Xpert</h3>
                 <el-input placeholder="请输入内容" class="input-with-select" size="small" v-model="input1">
                     <el-button slot="append" icon="el-icon-search" size="small"></el-button>
                 </el-input>
                 <el-link class="el-icon-s-tools" :underline="false"></el-link>
-                <el-link class="el-icon-switch-button" :underline="false"></el-link>
+                <el-link class="el-icon-switch-button" :underline="false" @click="out"></el-link>
                 <el-link class="el-icon-message-solid" :underline="false"></el-link>
         </el-header>
         <el-container> 
@@ -245,7 +245,7 @@
                                 'patientId': that.$store.state.user.id,
                                 'doctorId': that.ruleForm.doctorId,
                                 'imageId': that.ruleForm.imageId,
-                                'reserve_time': that.ruleForm.date,
+                                'reserve_time': that.ruleForm.reserve_time,
                                 'remark': that.ruleForm.remark,
                                 'name': that.ruleForm.name
                             }), {
@@ -319,6 +319,25 @@
                 this.chooseDoctorText = "已选择预约医生 (" + name + ")";
                 this.chooseDoctorFlag = "success";
             },
+            out() {
+                this.$confirm('是否退出登录?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+                }).then(() => {
+                    localStorage.clear();
+                    window.location.reload();
+                    this.$message({
+                        type: 'success',
+                        message: '退出登录成功!'
+                    });
+                }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消'
+                });          
+                });
+            }
         },
 
         mounted() {

@@ -1,12 +1,12 @@
 <template>
     <el-container>
         <el-header class="head">
-                <h3>NAME 检测</h3>
+                <h3>肿瘤Xpert</h3>
                 <el-input placeholder="请输入内容" class="input-with-select" size="small" v-model="input1">
                     <el-button slot="append" icon="el-icon-search" size="small"></el-button>
                 </el-input>
                 <el-link class="el-icon-s-tools" :underline="false"></el-link>
-                <el-link class="el-icon-switch-button" :underline="false"></el-link>
+                <el-link class="el-icon-switch-button" :underline="false" @click="out"></el-link>
                 <el-link class="el-icon-message-solid" :underline="false"></el-link>
         </el-header>
         <el-container> 
@@ -65,7 +65,7 @@
                     </el-table-column>
                     <el-table-column
                     align="right" width="250px">
-                    <template slot="header">
+                    <template slot="header" slot-scope="scope">
                         <el-input 
                         v-model="search"
                         size="small"
@@ -74,12 +74,12 @@
                     <template slot-scope="scope">
                         <el-button round
                         size="small"
-                        @click="window.location.href = this.$axios.defaults.baseURL + 'detection/download/?filename=' + scope.row.medicalWordName"
+                        @click="clickHandler(scope.row.medicalWordName)"
                         type="text" :disabled="scope.row.isFinished === 0">下载病历</el-button>
                         <el-button round
                         size="small"
                         type="text"
-                        @click="window.location.href = this.$axios.defaults.baseURL + 'detection/download/?filename=' + scope.row.reportWordName"
+                        @click=clickHandler(scope.row.reportWordName)
                         :disabled="scope.row.isFinished === 0">下载报告</el-button>
                     </template>
                     </el-table-column>
@@ -192,7 +192,8 @@
                 circleUrl: "https://img.imgdd.com/f210f3.55703645-a467-4fea-b91c-40c74bd30aad.png",
                 tableData: [],
                 search: '',
-                patientInfo: {}
+                patientInfo: {},
+                window: window
             }
         },
         computed: {
@@ -202,15 +203,38 @@
         },
         methods: {
             getCurrentTime(date) {
-                const isoDate = new Date(date);
-                const year = isoDate.getFullYear();
-                const month = ('0' + (isoDate.getMonth() + 1)).slice(-2);
-                const day = ('0' + isoDate.getDate()).slice(-2);
-                const hours = ('0' + isoDate.getHours()).slice(-2);
-                const minutes = ('0' + isoDate.getMinutes()).slice(-2);
-                const seconds = ('0' + isoDate.getSeconds()).slice(-2);
-                return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                date = new Date(date);
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
             },
+            // 添加一个点击事件监听器
+            clickHandler(name) {
+            // 确保在组件正确加载之后访问 window.location
+                this.$nextTick(() => {
+                    window.location.href = this.$axios.defaults.baseURL + 'detection/download/?filename=' + name;
+                });
+            },
+            out() {
+                this.$confirm('是否退出登录?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+                }).then(() => {
+                    localStorage.clear();
+                    window.location.reload();
+                    this.$message({
+                        type: 'success',
+                        message: '退出登录成功!'
+                    });
+                }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消'
+                });          
+                });
+            }
         },
 
         mounted() {

@@ -50,7 +50,7 @@ def DoctorLogin(request):
         result = {'code': 200, 'status': 'OK', 'msg': '登录成功', 'token': token,
                   'id': doctor.id, 'username': doctor.username, 'name': doctor.name, 'phone': doctor.phone,
                   'email': doctor.email, 'address': doctor.address, 'age': doctor.age, 'card': doctor.card,
-                  'gender': doctor.gender}
+                  'gender': doctor.gender, 'nation': doctor.nation}
 
         return JsonResponse(result)
 
@@ -122,12 +122,12 @@ def ModifyInfo(request):
     else:
         try:
             id = int(request.POST.get('id'))
+            name = request.POST.get('name')
             card = request.POST.get('card')
             email = request.POST.get('email')
             address = request.POST.get('address')
             phone = request.POST.get('phone')
             nation = request.POST.get('nation')
-            work = request.POST.get('work')
             age = request.POST.get('age')
             gender = request.POST.get('gender')
 
@@ -137,14 +137,15 @@ def ModifyInfo(request):
             doctor.phone = phone
             doctor.nation = nation
             doctor.card = card
-            doctor.work = work
             doctor.age = age
             doctor.gender = gender
+            doctor.name = name
 
             doctor.save()
             result = {'code': 200, 'status': 'OK', 'msg': '身份修改成功'}
 
             return JsonResponse(result)
         except Exception as e:
+            print(e)
             result = {'code': 400, 'error': '修改信息错误'}
             return JsonResponse(result)

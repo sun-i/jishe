@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-azy!b%*lt4r*@x=*^-d+g)f6wp4a5qtr(6=2j*8mbw7g$=%4d='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'PatientProfile',
     'DoctorProfile',
     'PatientRecord',
+    'MedicRecord',
+    'Detection',
+    'ImageRecord',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +57,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Server_side.urls'
+
+
 
 TEMPLATES = [
     {
@@ -81,11 +86,11 @@ WSGI_APPLICATION = 'Server_side.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'server_side',
+        'NAME': 'jishe',
         'USER': 'root',
         'PASSWORD': '20030214..',
         'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'PORT': '3306',
     }
 }
 
@@ -155,3 +160,12 @@ CORS_ALLOW_HEADERS = (
 )
 
 JWT_TOKEN_KEY = 'SXZY'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "../Client_side/dist/"),
+]
+
+# 新增项。静态文件收集目录
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')

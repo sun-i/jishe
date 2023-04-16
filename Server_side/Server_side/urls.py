@@ -20,4 +20,7 @@ urlpatterns = [
     path('user/patient/', include('PatientProfile.urls')),
     path('user/doctor/', include('DoctorProfile.urls')),
     path('patient/', include('PatientRecord.urls')),
+    path('medic/', include('MedicRecord.urls')),
+    path('detection/', include('Detection.urls')),
+    path('image/', include('ImageRecord.urls')),
 ]

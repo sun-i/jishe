@@ -1,7 +1,7 @@
 <template>
     <div id="bgi">
       <div class="head">
-          <div class="systemName">NAME</div>
+          <div class="systemName">肿瘤Xpert</div>
           <el-row class="LRButton">
             <el-button type="primary" round @click="login()">登 录</el-button>
             <el-button type="primary" round @click="register()">注 册</el-button>
@@ -14,8 +14,8 @@
             <el-link icon="iconfont icon-dingding"></el-link>
           </div>
       </div>
-      <h1>一键式肿瘤智能检测平台</h1>
-      <h3>ababaabbabbababbadbsadbska</h3>
+      <h1>肿瘤Xpert  一键式肿瘤智能检测平台</h1>
+      <h3 style="margin-top: 20px;"> TumorXpert   a one-click tumor intelligent detection platform</h3>
       <div class="startButton">
         <el-button type="primary">了解更多</el-button>
         <el-button type="primary" plain @click="login()">立即体验</el-button>
@@ -122,7 +122,7 @@
   #bgi {
     width: 100%;
     height: 100%;
-    background-image: url("../../assets/home_bg.jpg");
+    background-image: url("../../assets/bgi.jpg");
     background-position: center;
     background-size: cover;
     position: fixed;

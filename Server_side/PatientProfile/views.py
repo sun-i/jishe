@@ -109,6 +109,7 @@ def ModifyInfo(request):
         print(request.POST)
         try:
             id = int(request.POST.get('id'))
+            name = request.POST.get('name')
             card = request.POST.get('card')
             email = request.POST.get('email')
             address = request.POST.get('address')
@@ -118,6 +119,7 @@ def ModifyInfo(request):
             gender = request.POST.get('gender')
 
             patient = PatientProfile.objects.get(id=id)
+            patient.name = name
             patient.email = email
             patient.address = address
             patient.phone = phone

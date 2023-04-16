@@ -12,7 +12,8 @@ class DoctorProfile(models.Model):
     card = models.CharField(verbose_name='身份证', null=True, max_length=30)
     age = models.IntegerField(verbose_name='年龄', null=True)
     address = models.CharField(verbose_name='居住地址', max_length=200, null=True)
-    gender = models.IntegerField(verbose_name='性别', null=True)
+    gender = models.CharField(verbose_name='性别', null=True, max_length=10)
+    nation = models.CharField(verbose_name='民族', null=True, max_length=200)
 
 
     def __str__(self):
